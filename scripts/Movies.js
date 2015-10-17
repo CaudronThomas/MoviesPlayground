@@ -2,15 +2,13 @@ function MoviePage(){
 	var self = this;
 
 	self.newTitle = ko.observable();
+	self.errorVisible = ko.observable(false);
+	self.errorMessage = ko.observable();
 	self.movieCollection = ko.observableArray([]);
 
 	self.addMovie = function(){
 		getMovie(self.newTitle());
 	};
-
-	ko.computed(function () {
-		getMovie("The Avengers");
-	});
 
 	function isMovieAlreadyAdded(title){
 		var exists = false;
@@ -22,7 +20,7 @@ function MoviePage(){
 
 	function getMovie(title){
 		if(isMovieAlreadyAdded(title)){
-			alert("This movie was already added.");
+			showErrorMessage('This movie was already added.');
 		}else{
 			var searchTitle = title.split(' ').join('+');
 			var url = "http://www.omdbapi.com/?t={title}&y=&plot=full&r=json".replace('{title}', searchTitle);
@@ -31,13 +29,21 @@ function MoviePage(){
 
 				if(json.Response === 'True') {
 					self.movieCollection.push(json);
+					self.errorVisible(false);
+					self.newTitle('');
 				} else {
-					alert(json.Error);
+					showErrorMessage(json.Error);
 				}
 			});
 		}
-	};
+	}
 
+	function showErrorMessage(message){
+		self.errorMessage(message);
+		self.errorVisible(true);
+	}
+
+	getMovie("The Avengers");
 	
 }
 
