@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Movies test</title>
+
+		<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+        <script type='text/javascript' src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-3.1.0.js"></script>
+    </head>
+    <body>
+    	<h1>Movies Test</h1>
+    	<div data-bind="foreach: movieCollection">
+    		<img data-bind="attr: {src: Poster}"/>
+    		<h2 data-bind="text: Title"></h2>
+    		<p data-bind="text: Plot"></p>
+    	</div>
+
+    	<form data-bind="submit: addMovie">
+    		<input data-bind="value: newTitle" placeHolder="title"/>
+    		<button type="submit">Add movie</button>
+    	</form>
+
+    	<script type="text/javascript" src="scripts/Movies.js"></script>
+    </body>
+</html>
